@@ -10,4 +10,12 @@ class StyleOfButtons{
       borderRadius: BorderRadius.all(Radius.circular(10))
     );
   }
+
+
+  static BoxDecoration NormalButton(){
+    return BoxDecoration(
+        color: Colors.white54,
+        borderRadius: BorderRadius.all(Radius.circular(10))
+    );
+  }
 }

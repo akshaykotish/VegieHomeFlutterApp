@@ -1,6 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:vegiehome/Account/Login.dart';
+import 'package:vegiehome/ClientSide/Home.dart';
+import 'package:vegiehome/ClientSide/SplashScreen.dart';
+import 'package:vegiehome/DataSet/Cookies.dart';
 
 Future<void> main() async {
 
@@ -8,6 +11,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
 
   runApp(const MyApp());
+  Cookies.init();
 }
 
 class MyApp extends StatelessWidget {
@@ -23,7 +27,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Login(),
+      home: SplashScreen(),
     );
   }
 }

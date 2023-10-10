@@ -41,7 +41,9 @@ class Account{
       "Admin": account.Admin,
       "TimeStamp": account.TimeStamp,
     });
+    account.DocID = doc.id;
     print("User updated" + doc.id);
+    return account;
   }
 
   static PushToFirebaseOnID(Account account, String DocID)
@@ -65,6 +67,8 @@ class Account{
       "TimeStamp": account.TimeStamp,
     });
     print("User updated");
+    account.DocID = DocID;
+    return account;
   }
 
   static PullFromFirebase(Contact) async {

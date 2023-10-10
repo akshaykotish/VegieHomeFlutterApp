@@ -7,7 +7,14 @@ class StyleOfTexts{
   static TextStyle VerifyButton(){
     return TextStyle(
         color: Colors.blue,
-      fontWeight: FontWeight.bold
+        fontWeight: FontWeight.bold
+    );
+  }
+
+  static TextStyle NormalText(){
+    return TextStyle(
+        color: Colors.blue,
+        fontWeight: FontWeight.bold
     );
   }
 

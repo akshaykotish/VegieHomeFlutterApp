@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:vegiehome/Account/SetupAddress.dart';
 import 'package:vegiehome/DataSet/Account.dart';
+import 'package:vegiehome/DataSet/Cookies.dart';
 import 'package:vegiehome/Parts/StyleOfButtons.dart';
 import 'package:vegiehome/Parts/StyleOfTexts.dart';
 
@@ -86,18 +88,29 @@ class _LoginState extends State<Login> {
           print('User Login In Successful');
 
           Account userData = Account("", "", fullName.text, "+91"+contact.text, "", "", "", "", "", "", "", "", "", false, DateTime.now(), "");
-          var account = await Account.PullFromFirebase("+91" + contact.text);
+          var account = await Account.PullFromFirebase("+91" + contact.text) as Account;
           if(account != null && account.DocID != "")
             {
-              Account.PushToFirebaseOnID(userData, account.DocID);
+              account.FullName = fullName.text;
+              userData = await Account.PushToFirebaseOnID(account, account.DocID);
             }
           else{
-            Account.PushToFirebase(userData);
+              userData = await Account.PushToFirebase(userData);
           }
+          print("DoC ID is " + userData.DocID + " and " + userData.Address1 + " or " + account.Address1);
+
             ErrorMessage = "Login Suceed.";
             setState(() {
 
             });
+
+
+          Cookies.SetCookie("Contact", contact.text);
+          Cookies.SetCookie("ToOpen", "SetupAddress");
+
+            Navigator.pop(context);
+            Navigator.push(context, MaterialPageRoute(builder: (context) => SetupAddress(account: userData)));
+
         });
         // .onError((error, stackTrace){
         //       ErrorMessage = "Please enter correct OTP.";
@@ -105,6 +118,12 @@ class _LoginState extends State<Login> {
         //
         //       });
         //   });
+  }
+
+  @override
+  void dispose() {
+    _auth = FirebaseAuth.instance;
+    super.dispose();
   }
 
   @override
